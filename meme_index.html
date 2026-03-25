@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--
+  Meme version of the site (on purpose ugly).
+  Styles: meme_styles.css
+  Box model, selectors, :hover / :nth-child / ::before / ::after, positioning,
+  float, flex, media queries — short comments in HTML + CSS point to each part.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindFlow AI — AI-Powered Study Assistant</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="meme_styles.css" />
+  </head>
+  <!-- body + class name = how CSS targets this tag -->
+  <body class="body-meme">
+    <!-- id used with #chaos-top in CSS; header sticks when you scroll -->
+    <header class="meme-header" id="chaos-top">
+      <div class="header-inner">
+        <a href="#chaos-top" class="logo-link">MindFlow AI</a>
+        <nav aria-label="Main">
+          <!-- ul > li is "direct child"; li + li is "right after another li" in CSS -->
+          <ul class="nav-list">
+            <li><a href="#stuff">Products</a></li>
+            <li><a href="#cta-meme">Pricing</a></li>
+            <li><a href="#footer-meme">FAQ</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- main > section in CSS = only sections that are direct children of main -->
+    <main class="meme-main">
+      <!-- hero block is position relative; the glow div inside is position absolute -->
+      <section class="hero-meme" id="hero-meme">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="wrap hero-flex">
+          <div class="hero-text">
+            <h1>Clarity To Your Academic Chaos</h1>
+            <p>An AI-powered assistant that organizes your semester in seconds.</p>
+            <a href="#cta-meme" class="btn">Try for free</a>
+            <a href="#demo-meme" class="btn">Watch Demo</a>
+          </div>
+          <figure class="hero-fig">
+            <!-- float:left on this caption in CSS (.floater) -->
+            <figcaption class="floater">MindFlow AI app dashboard</figcaption>
+            <img src="resources/hero_study_assistant.png" alt="" width="500" height="330" />
+          </figure>
+        </div>
+      </section>
+
+      <section class="blob-meme" id="stuff">
+        <div class="wrap">
+          <!-- CSS uses ~ so any p.after-title that comes after h2.block-title (same parent) gets the style -->
+          <h2 class="block-title">Student Life is Overwhelming</h2>
+          <p class="after-title">
+            MindFlow AI turns scattered notes and dates into a calm, actionable plan—so you can focus on
+            learning, not logistics.
+          </p>
+          <!-- first card / second card styled with :nth-child(1) and (2) in CSS -->
+          <div class="cards">
+            <article class="card">
+              <img src="resources/student_life_deadlines.png" alt="" width="100" height="100" />
+              <h3>Too many deadlines</h3>
+              <p>Assignments pile up faster than you can plan for them.</p>
+            </article>
+            <article class="card">
+              <img src="resources/student_life_much_info.png" alt="" width="100" height="100" />
+              <h3>Too much information</h3>
+              <p>Lectures, slides, and readings never fit in one notebook.</p>
+            </article>
+            <article class="card">
+              <img src="resources/student_life_no_time.png" alt="" width="100" height="100" />
+              <h3>Not enough time</h3>
+              <p>You need structure without spending hours organizing.</p>
+            </article>
+          </div>
+
+          <!-- flex row + weird justify/align + flex-grow on .feat-grow (see CSS) -->
+          <h2 class="block-title">What MindFlow AI Can Do</h2>
+          <div class="flex-row">
+            <div class="feat">Ask Questions</div>
+            <div class="feat feat-grow">Generate Flashcards</div>
+            <div class="feat">Take a Quiz</div>
+            <div class="feat">Interactive AI Lessons</div>
+          </div>
+
+          <h2 class="demo-heading">See how AI builds your week in 10 seconds.</h2>
+          <div class="vid" id="demo-meme">
+            <video
+              controls
+              playsinline
+              autoplay
+              muted
+              poster="resources/hero_study_assistant.png"
+            >
+              <source src="resources/video_guide.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <!-- list items: :nth-child and :hover in CSS -->
+          <h2 class="block-title">Students Who Study Smarter</h2>
+          <ul class="quotes">
+            <li>Jane Smith — “MindFlow cut my weekly planning from an hour to five minutes.”</li>
+            <li>Camila Laine — “Flashcards from my notes actually match what’s on the exam.”</li>
+            <li>Dev Patel — “The quiz mode showed me gaps I didn’t know I had.”</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="cta-meme" id="cta-meme">
+        <div class="wrap">
+          <h2>Start Free. Upgrade When You’re Ready.</h2>
+          <p>
+            Organize your semester, review smarter, and keep every deadline in one calm dashboard.
+          </p>
+          <a href="#chaos-top" class="btn btn-big">Get A Free Plan</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- footer: h3 ~ p in CSS styles the .fine paragraph (must be after h3, same parent) -->
+    <footer class="foot-meme" id="footer-meme">
+      <div class="wrap foot-cols">
+        <div>
+          <h3>Product</h3>
+          <ul class="foot-ul">
+            <li><a href="#stuff">Features</a></li>
+            <li><a href="#cta-meme">Pricing</a></li>
+            <li><a href="#stuff">AI Tool</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <p class="fine">hello@mindflow.ai · +1 (800) 555-1234</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

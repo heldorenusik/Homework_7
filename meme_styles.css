@@ -1,0 +1,718 @@
+/*
+  Styles for meme_index.html (ugly layout on purpose).
+
+  Topics this file covers:
+  - Box model: margin, padding, border; * { box-sizing: border-box; } at the top
+  - Selectors: tag names, .classes, #ids, *, > (child), + (next sibling), ~ (later sibling)
+  - :hover, :nth-child, ::before, ::after
+  - position: sticky, relative, absolute
+  - float
+  - display: flex + justify-content / align-items / flex-wrap / flex-grow
+  - @media for narrow vs wide screens
+
+  Static rotate/skew on some blocks for the meme look (not on :hover — hover stays flat).
+
+  Scroll down — short comments mark each part.
+*/
+
+/* * = all elements: padding counts inside width */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* same tokens as styles.css (main MindFlow page) */
+:root {
+  --color-text: #1a1a2e;
+  --color-muted: #5c5c6f;
+  --color-white: #fff;
+  --lavender: #e8e4f3;
+  --mint: #d4f4ec;
+  --blue-soft: #d6e8ff;
+  --pink-soft: #fde8f0;
+  --purple-tint: #c4b5fd;
+  --accent-dark: #2d2d3a;
+  --mesh-base-color: #f5f8fc;
+  --indigo-border: rgba(79, 70, 229, 0.35);
+  --indigo-soft: rgba(99, 102, 241, 0.12);
+}
+
+/* body.body-meme = tag + class; mesh background matches the real site */
+body.body-meme {
+  margin: 0;
+  padding: 22px 3px 90px 18px;
+  font-family: "Comic Neue", "Comic Sans MS", cursive;
+  color: var(--color-text);
+  background-color: var(--mesh-base-color);
+  background-image:
+    radial-gradient(ellipse 110% 85% at 50% -8%, rgba(125, 211, 252, 0.44), transparent 58%),
+    radial-gradient(ellipse 72% 58% at 8% 28%, rgba(233, 213, 255, 0.4), transparent 52%),
+    radial-gradient(ellipse 78% 62% at 94% 22%, rgba(251, 207, 232, 0.44), transparent 52%),
+    radial-gradient(ellipse 100% 75% at 50% 108%, rgba(186, 230, 253, 0.38), transparent 58%),
+    radial-gradient(ellipse 58% 48% at 18% 88%, rgba(125, 211, 252, 0.34), transparent 48%),
+    radial-gradient(circle at 48% 40%, rgba(110, 231, 183, 0.4), transparent 52%),
+    radial-gradient(ellipse 50% 45% at 82% 72%, rgba(196, 181, 253, 0.32), transparent 46%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border: 6px groove var(--purple-tint);
+  min-height: 100vh;
+}
+
+/* plain h1 / h2 / h3 = element selectors */
+h1 {
+  font-size: clamp(1.4rem, 11vw, 3.2rem);
+  margin: 0 0 8px -6px;
+  text-align: right;
+  transform: rotate(-2.2deg);
+}
+
+h2 {
+  font-size: clamp(0.75rem, 5vw, 1.6rem);
+  margin: 28px 0 10px -14px;
+  transform: rotate(1.4deg);
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin: 4px 0 2px 20px;
+}
+
+h1,
+h2,
+h3 {
+  text-shadow: 2px 2px 0 rgba(196, 181, 253, 0.65);
+}
+
+/* #id */
+#chaos-top {
+  border-bottom: 4px dotted rgba(99, 102, 241, 0.45);
+  margin-bottom: -8px;
+  transform: rotate(0.55deg);
+}
+
+/* sticky = sticks under the top of the viewport while scrolling */
+.meme-header {
+  position: sticky;
+  top: -4px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 3px 0 16px 40px;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+/* ::before adds text before the header (no extra HTML) */
+.meme-header::before {
+  content: "WARNING ";
+  color: var(--color-muted);
+  font-size: 9px;
+}
+
+/* relative here; flex = logo + nav in a row (messy settings on purpose) */
+.header-inner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 4px 50px;
+  max-width: 92%;
+  margin: 0 0 0 auto;
+  padding: 18px 6px 8px 22px;
+  border: 3px double var(--accent-dark);
+  background: var(--color-white);
+  transform: skewY(-0.9deg);
+}
+
+.nav-list {
+  margin: -6px 0 0 -30px;
+  padding: 0;
+  align-self: flex-end;
+}
+
+/* > = only direct children (li right inside ul) */
+.nav-list > li {
+  display: inline-block;
+  list-style: none;
+  vertical-align: bottom;
+}
+
+/* 1st / 2nd / 3rd nav item = different font sizes */
+.nav-list > li:nth-child(1) a {
+  font-size: 22px;
+}
+
+.nav-list > li:nth-child(2) a {
+  font-size: 11px;
+}
+
+.nav-list > li:nth-child(3) a {
+  font-size: 16px;
+  padding: 4px 2px;
+}
+
+/* + = style an li that comes right after another li */
+.nav-list > li + li {
+  margin-left: 4px;
+  padding-left: 22px;
+  border-left: 2px solid var(--purple-tint);
+}
+
+.logo-link {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 12px;
+  max-width: 55%;
+  line-height: 0.9;
+  transform: rotate(3.1deg);
+}
+
+/* :hover = mouse over the link */
+.logo-link:hover {
+  color: #4338ca;
+  outline: 2px solid var(--purple-tint);
+}
+
+.nav-list a:hover {
+  background: var(--lavender);
+}
+
+/* sections that sit directly inside main */
+.meme-main > section {
+  margin: 32px -6px 18px 14px;
+  padding: 8px 24px 28px 4px;
+  border: 10px outset rgba(196, 181, 253, 0.55);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 8px 28px var(--indigo-soft);
+}
+
+section.hero-meme {
+  margin-right: 2%;
+  margin-left: -4px;
+  padding-top: 22px;
+}
+
+section.blob-meme {
+  text-align: right;
+  padding-left: 8%;
+  margin-top: 8px;
+  background: linear-gradient(180deg, transparent, rgba(232, 228, 243, 0.35));
+}
+
+/* ~ = p.after-title that appears after h2.block-title (same parent), not only the next node */
+.blob-meme .block-title ~ p.after-title {
+  background: var(--accent-dark);
+  color: var(--mint);
+  padding: 8px 8px 8px 40px;
+  font-family: monospace;
+  text-align: left;
+  width: 108%;
+  max-width: none;
+  margin-left: -12px;
+  transform: rotate(0.65deg);
+}
+
+/* relative so the glow can be positioned inside this box */
+.hero-meme {
+  position: relative;
+  overflow: visible;
+}
+
+/* absolute = taken out of normal flow; placed vs .hero-meme */
+.hero-glow {
+  position: absolute;
+  inset: -20px -10% 40% -5%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(196, 181, 253, 0.35), transparent 55%),
+    radial-gradient(ellipse at 80% 40%, rgba(125, 211, 252, 0.28), transparent 50%);
+  pointer-events: none;
+}
+
+/* flex column here; media query switches to row on big screens */
+.hero-flex {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 8px 32px;
+}
+
+.wrap {
+  max-width: 820px;
+  margin: 0 auto 0 3%;
+  padding: 0 2px 0 16px;
+}
+
+.blob-meme .wrap {
+  margin-left: auto;
+  margin-right: 0;
+  max-width: 95%;
+}
+
+.hero-text {
+  width: 94%;
+  align-self: flex-start;
+  margin-top: -10px;
+}
+
+.hero-text p {
+  margin: 0 0 18px 25px;
+  max-width: 70%;
+  font-size: 0.95rem;
+}
+
+/* plain text links — no button chrome (still uses .btn class in HTML for hooks if needed) */
+.btn {
+  display: inline;
+  padding: 0;
+  margin: 0 1.25rem 0 0;
+  border: none;
+  background: none;
+  color: #4338ca;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.btn:hover {
+  color: var(--accent-dark);
+  background: none;
+  outline: none;
+}
+
+/* slightly larger label only; still just text */
+.btn-big {
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  margin-left: 0;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.hero-fig {
+  margin: 12px -8px 0 20px;
+  padding: 4px 16px 20px 2px;
+  background: var(--blue-soft);
+  overflow: auto;
+  width: 112%;
+  max-width: 520px;
+  align-self: center;
+  transform: rotate(1.35deg);
+}
+
+.hero-fig img {
+  width: 118%;
+  max-width: none;
+  height: auto;
+  margin-left: -12%;
+  border: 6px dashed rgba(99, 102, 241, 0.55);
+  display: block;
+}
+
+/* float:left on the caption (old-school layout) */
+.floater {
+  float: left;
+  width: 95px;
+  margin: -4px 24px 14px -18px;
+  padding: 10px 4px;
+  background: var(--pink-soft);
+  border: 3px solid var(--accent-dark);
+  font-size: 10px;
+  color: var(--color-text);
+  line-height: 1.1;
+  transform: rotate(-9deg);
+}
+
+.cards {
+  overflow: auto;
+  text-align: left;
+}
+
+.card {
+  padding: 6px 20px 18px 10px;
+  margin: 20px 0 8px -15px;
+  border: 6px solid rgba(99, 102, 241, 0.25);
+  background: var(--color-white);
+  width: 88%;
+}
+
+/* first / second card look different */
+.cards .card:nth-child(1) {
+  border-color: rgba(99, 102, 241, 0.65);
+  width: 96%;
+  margin-left: 8px;
+  transform: rotate(-2.8deg);
+}
+
+.cards .card:nth-child(2) {
+  border-color: rgba(56, 189, 248, 0.75);
+  margin-left: 22%;
+  margin-right: -5%;
+  width: 72%;
+  margin-top: -6px;
+  transform: rotate(3.6deg);
+}
+
+.cards .card:nth-child(3) {
+  border-color: rgba(167, 139, 250, 0.75);
+  margin-left: 5%;
+  width: 90%;
+  transform: rotate(-1.7deg);
+}
+
+.card img {
+  width: 130px;
+  height: auto;
+  max-width: 45%;
+}
+
+/* second card image also uses float (right) */
+.cards .card:nth-child(2) img {
+  width: 70px;
+  float: right;
+  margin: 4px 0 8px 12px;
+}
+
+/* flex with row-reverse, wrap, weird justify/align; .feat-grow has flex-grow */
+.flex-row {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: baseline;
+  gap: 2px 24px;
+  min-height: 160px;
+  padding: 24px 4px 8px 18px;
+  background: transparent;
+  border: 3px dashed rgba(99, 102, 241, 0.4);
+  margin-left: -8px;
+  width: 104%;
+}
+
+/* same purple-ish family as .feature-card on the real page */
+.feat {
+  flex: 1 1 60px;
+  padding: 20px 6px 8px 14px;
+  background: linear-gradient(155deg, #ebe4ff 0%, #f8f7ff 100%);
+  color: var(--color-text);
+  border: 5px solid rgba(79, 70, 229, 0.35);
+  font-size: 14px;
+  min-height: 52px;
+  min-width: 0;
+}
+
+.feat:nth-child(1) {
+  font-size: 22px;
+  padding-top: 4px;
+  flex-basis: 40%;
+  transform: rotate(-1.9deg);
+  border-color: rgba(99, 102, 241, 0.55);
+}
+
+.feat:nth-child(2) {
+  font-size: 9px;
+  align-self: center;
+  transform: rotate(2.2deg);
+  border-color: rgba(56, 189, 248, 0.65);
+}
+
+.feat:nth-child(3) {
+  flex-basis: 120%;
+  max-width: 45%;
+  margin-top: -12px;
+  transform: rotate(1.6deg);
+  border-color: rgba(167, 139, 250, 0.65);
+}
+
+.feat:nth-child(4) {
+  font-size: 11px;
+  align-self: flex-end;
+  flex-basis: 35%;
+  transform: rotate(-2.4deg);
+  border-color: rgba(129, 140, 248, 0.75);
+}
+
+.feat:nth-child(odd) {
+  align-self: flex-start;
+}
+
+.feat-grow {
+  flex-grow: 8;
+  flex-shrink: 0;
+  margin-left: 8px;
+  transform: rotate(0.8deg);
+  border-width: 6px;
+  border-color: rgba(79, 70, 229, 0.55);
+  background: linear-gradient(155deg, #e2e8ff 0%, #ebe4ff 100%);
+}
+
+.demo-heading {
+  margin: 24px 0 12px -8px;
+  font-size: clamp(0.65rem, 3.5vw, 1rem);
+  transform: skewX(-2.1deg);
+}
+
+.vid {
+  margin: 28px -12px 12px 8%;
+  padding: 6px 30px 22px 4px;
+  background: #0f0f14;
+  width: 91%;
+  transform: skewX(1.3deg);
+}
+
+.vid video {
+  width: 76%;
+  max-width: 480px;
+  min-width: 220px;
+  display: block;
+  margin: 0 0 0 auto;
+  border: 5px solid rgba(196, 181, 253, 0.85);
+}
+
+.quotes {
+  margin: 16px 0 0 -20px;
+  padding: 12px 1rem 12px 3rem;
+  text-align: center;
+  width: 115%;
+  background: linear-gradient(135deg, #e9e0ff, #ddd6fe);
+  border-radius: 0;
+}
+
+.quotes li {
+  margin: 8px 0;
+  padding: 4px;
+}
+
+.quotes li:nth-child(1) {
+  margin-right: 30%;
+  text-align: right;
+  transform: rotate(-1.1deg);
+}
+
+.quotes li:nth-child(2) {
+  color: #6366f1;
+  text-decoration: line-through;
+  margin-left: 25%;
+  text-align: left;
+  font-size: 1.3rem;
+  transform: rotate(2.7deg);
+}
+
+.quotes li:nth-child(3) {
+  margin-right: 10%;
+  text-align: right;
+  font-size: 0.95rem;
+  transform: rotate(-1.8deg);
+}
+
+.quotes li:hover {
+  background: var(--accent-dark);
+  color: var(--color-white);
+}
+
+.cta-meme {
+  margin: 40px -4px 16px 12px;
+  padding: 12px 8px 40px 28px;
+  text-align: left;
+  background: linear-gradient(135deg, #eef2ff 0%, #faf5ff 45%, #ecfeff 100%);
+  color: var(--color-text);
+  border: 8px double rgba(196, 181, 253, 0.75);
+  width: 98%;
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 12px 40px var(--indigo-soft);
+}
+
+.cta-meme h2 {
+  text-align: center;
+  margin-left: 30%;
+  transform: rotate(-0.9deg);
+}
+
+.cta-meme p {
+  margin: 0 0 20px -6px;
+  max-width: 55%;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.foot-meme {
+  margin-top: 8px;
+  padding: 28px 4px 12px 24px;
+  background: rgba(244, 246, 252, 0.95);
+  color: var(--color-muted);
+  border-top: 5px solid rgba(99, 102, 241, 0.2);
+}
+
+/* ::after example (moved off .btn — empty clearfix, no visible “design”) */
+.foot-meme::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.foot-meme h3 {
+  color: var(--color-text);
+}
+
+/* footer as a flex row */
+.foot-cols {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 8px 40px;
+}
+
+/* first / last column div inside .foot-cols */
+.foot-cols > div:first-child {
+  flex: 2 1 140px;
+  margin-left: -10px;
+  transform: rotate(0.7deg);
+}
+
+.foot-cols > div:last-child {
+  flex: 1 1 200px;
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.foot-ul {
+  margin: 0;
+  padding-left: 2.5rem;
+}
+
+.foot-ul a {
+  color: #4338ca;
+}
+
+.foot-ul a:hover {
+  color: var(--accent-dark);
+}
+
+/* ~ again: p.fine after h3 in the same div */
+.foot-meme h3 ~ p.fine {
+  font-size: 10px;
+  border-left: 4px solid var(--purple-tint);
+  padding-left: 8px;
+  margin-top: 24px;
+  width: 130%;
+  max-width: 280px;
+  margin-left: auto;
+}
+
+/* narrow screen: different colors + flex directions + badge spot */
+@media (max-width: 600px) {
+  body.body-meme {
+    border-width: 12px;
+    background-color: var(--mesh-base-color);
+    background-image:
+      radial-gradient(ellipse 110% 85% at 50% -8%, rgba(125, 211, 252, 0.44), transparent 58%),
+      radial-gradient(ellipse 72% 58% at 8% 28%, rgba(233, 213, 255, 0.4), transparent 52%),
+      radial-gradient(ellipse 78% 62% at 94% 22%, rgba(251, 207, 232, 0.44), transparent 52%),
+      radial-gradient(ellipse 100% 75% at 50% 108%, rgba(186, 230, 253, 0.38), transparent 58%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-left: 0;
+    padding-right: 12px;
+  }
+
+  .meme-header {
+    position: static;
+    padding-left: 8px;
+  }
+
+  .header-inner {
+    max-width: 100%;
+    margin: 0;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .logo-link {
+    max-width: 100%;
+    transform: rotate(-3.5deg);
+  }
+
+  .hero-flex {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .hero-fig {
+    width: 100%;
+    margin-left: 0;
+    transform: rotate(-1.6deg);
+  }
+
+  .hero-fig img {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .flex-row {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    min-height: 220px;
+    width: 100%;
+  }
+
+  .feat:nth-child(3) {
+    flex-basis: auto;
+    max-width: 100%;
+    align-self: flex-start;
+  }
+
+  .feat:nth-child(4) {
+    flex-basis: auto;
+    max-width: 100%;
+  }
+
+  .vid {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .vid video {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .cta-meme p {
+    max-width: 100%;
+  }
+}
+
+/* wide screen: hero side by side */
+@media (min-width: 900px) {
+  .hero-flex {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  .hero-text {
+    flex: 0 1 42%;
+    margin-top: 0;
+    align-self: flex-end;
+  }
+
+  .hero-fig {
+    flex: 1 1 48%;
+    width: auto;
+    max-width: 460px;
+    margin: -4px 0 0 12px;
+    transform: rotate(2.3deg);
+  }
+
+  .block-title {
+    margin-left: 8%;
+  }
+}

@@ -145,37 +145,7 @@
           <div class="demo-block" id="demo">
             <h2 class="demo-title">See how AI builds your week in 10 seconds.</h2>
             <div class="demo-video-wrap">
-              <button
-                type="button"
-                class="demo-play-toggle"
-                aria-label="Play video"
-                aria-pressed="false"
-              >
-                <svg
-                  class="demo-play-toggle__icon demo-play-toggle__icon--play"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path d="M8 5v14l11-7L8 5z" fill="currentColor" />
-                </svg>
-                <svg
-                  class="demo-play-toggle__icon demo-play-toggle__icon--pause"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z" fill="currentColor" />
-                </svg>
-              </button>
               <video
-                id="demo-video"
                 class="demo-video"
                 controls
                 playsinline
@@ -318,35 +288,5 @@
         </div>
       </div>
     </footer>
-
-    <script>
-      // small script: middle play button plays or pauses the video and switches icon
-      (function () {
-        var wrap = document.querySelector(".demo-video-wrap");
-        if (!wrap) return;
-        var video = wrap.querySelector(".demo-video");
-        var btn = wrap.querySelector(".demo-play-toggle");
-        if (!video || !btn) return;
-
-        function syncToggle() {
-          var playing = !video.paused;
-          btn.classList.toggle("is-playing", playing);
-          btn.setAttribute("aria-pressed", playing ? "true" : "false");
-          btn.setAttribute("aria-label", playing ? "Pause video" : "Play video");
-        }
-
-        btn.addEventListener("click", function () {
-          if (video.paused) {
-            video.play().catch(function () {});
-          } else {
-            video.pause();
-          }
-        });
-
-        video.addEventListener("play", syncToggle);
-        video.addEventListener("pause", syncToggle);
-        video.addEventListener("ended", syncToggle);
-      })();
-    </script>
   </body>
 </html>
